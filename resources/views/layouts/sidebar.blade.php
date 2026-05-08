@@ -5,6 +5,6 @@
                 <li class="sidebar-item"><a href="{{ route('incidencias.index') }}" class="sidebar-link {{ request()->routeIs('incidencias.*') ? 'active' : '' }}"><i class="fas fa-exclamation-circle"></i> <span>Incidencias</span></a></li>
                 
                 
-                <li style="margin-top: 700px; padding-top: 24px; border-top: 1px solid var(--border);"><a href="{{ route('logout') }}" class="dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                <li style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border);"><a href="{{ route('logout') }}" class="dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
             </ul>
         </aside>
