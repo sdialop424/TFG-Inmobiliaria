@@ -64,7 +64,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ request('show_all') ? 'Todas las Incidencias' : 'Últimas Incidencias' }}</h3>
             @if(!request('show_all'))
-                <a href="{{ route('incidencias.index') }}" class="btn btn-sm btn-outline">Ver todas</a>
+                <a href="{{ route('dashboard.index', ['show_all' => 1]) }}" class="btn btn-sm btn-outline">Ver todas</a>
             @else
                 <a href="{{ route('dashboard.index') }}" class="btn btn-sm btn-outline">Ver últimas</a>
             @endif

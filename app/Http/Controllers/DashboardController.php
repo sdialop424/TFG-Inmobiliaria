@@ -37,13 +37,11 @@ class DashboardController extends Controller
 
         $usuarios_count = User::count();
 
-        $ultimas_incidencias = [];
+        $ultimas_incidencias = Incidencia::with(['propiedad', 'tipoIncidencia', 'estadoIncidencia'])->latest()->take(5)->get();
         if (request('show_all')) {
             $ultimas_incidencias = Incidencia::with(['propiedad', 'tipoIncidencia', 'estadoIncidencia'])->latest()->get();
         }
-        else {
-            $ultimas_incidencias = Incidencia::with(['propiedad', 'tipoIncidencia', 'estadoIncidencia'])->latest()->take(5)->get();
-        }
+        $ultimos_usuarios = User::latest()->take(5)->get();
 
         return view('dashboard.index', compact('propiedades_count', 'incidencias_resueltas', 'incidencias_pendientes', 'ultimas_incidencias'));
     }

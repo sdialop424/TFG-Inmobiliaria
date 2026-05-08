@@ -18,7 +18,7 @@
                         <a href="{{ route('users.show', auth()->id()) }}" class="dropdown-item"><i class="fas fa-user"></i> Mi perfil</a>
                         <a href="{{ route('users.edit', auth()->id()) }}" class="dropdown-item"><i class="fas fa-edit"></i> Editar perfil</a>
                         <a href="{{ route('users.index') }}" class="dropdown-item"><i class="fas fa-users"></i> Gestión de Usuarios</a>
-                        
+                        <a href="{{ route('logout') }}" class="dropdown-item danger"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                     </div>
                 </div>
             </div>
