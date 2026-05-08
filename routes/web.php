@@ -12,7 +12,7 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [AuthController::class, 'form'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
 // REGISTRO (SIN LOGIN)
