@@ -25,6 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/react-demo', function () {
+        return view('react-demo');
+    })->name('react.demo');
 
     Route::resource('propiedades', PropiedadController::class)
         ->parameters(['propiedades' => 'propiedad']);

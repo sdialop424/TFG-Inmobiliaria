@@ -1,12 +1,12 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Propiedad;
-use Illuminate\Http\Request;
-use App\Models\TipoPropiedad;
-use App\Models\User;
+
 use App\Http\Requests\PropiedadRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 
 
@@ -14,68 +14,47 @@ class PropiedadController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $info = ['mostrarBotones' => $user->isAdmin()];
-       $propiedades = [];
-        if($user->isAdmin()) {
             $propiedades = Propiedad::all();
-        } else {
-             $propiedades = Propiedad::where('usuario_id', $user->id)->get();
-        }
+        
 
-        return view('propiedades.index', compact('propiedades' ,'info'));
+        return response()->json(['payload' => $propiedades, 'success' => true], 200);
     }
 
-    public function create()
-    {
-        $tiposPropiedad =  TipoPropiedad::all();
-        $usuarios = User::all();
-        return view('propiedades.create', compact('tiposPropiedad', 'usuarios'));
-        
-    }
+    
 
-    public function store(PropiedadRequest $request)
+    public function store(Request $request)
     {
-        $validate=$request->validated();
+        $validate=$request->validate(['direccion' => 'required|string|max:255',
+            'usuario_id' => 'required|exists:users,id',
+            'tipo_propiedad_id' => 'required|exists:tipos_propiedad,id']);
 
         
-        Propiedad::create($validate);
+        $propiedad = Propiedad::create($validate);
+        
 
-        return redirect()->route('propiedades.index')
-        ->with('success', 'Propiedad creada exitosamente.');
+        return response()->json(['payload' => $propiedad, 'success' => true], 200);
     }
 
     public function show(Propiedad $propiedad)
     {
-        
-        $tiposPropiedad =  TipoPropiedad::all();
-        $usuarios = User::all();
-        return view('propiedades.show', compact('propiedad', 'tiposPropiedad', 'usuarios'));
+        return response()->json(['payload' => $propiedad, 'success' => true], 200);
     }
 
-    public function edit(Propiedad $propiedad)
-    {
-        
-        $tiposPropiedad =  TipoPropiedad::all();
-        $usuarios = User::all();
-        return view('propiedades.edit', compact('propiedad', 'tiposPropiedad', 'usuarios'));
-    }
+    
 
     public function update(PropiedadRequest $request, Propiedad $propiedad)
     {
         $validate=$request->validated();
 
         $propiedad->update($validate);
-
-        return redirect()->route('propiedades.index')
-        ->with('success', 'Propiedad actualizada exitosamente.');
+    
+        return response()->json(['payload' => $propiedad, 'success' => true], 200);
     }
 
     public function destroy(Propiedad $propiedad)
     {
         $propiedad->delete();
         
-        return redirect()->route('propiedades.index')
-        ->with('success', 'Propiedad eliminada exitosamente.');
+        return response()->json(['success' => true], 200);
     }
 }
