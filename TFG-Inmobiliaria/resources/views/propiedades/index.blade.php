@@ -59,7 +59,7 @@
                 </tbody>
             </table>
             <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
-                {{ $propiedades->links() }}
+                {{ $propiedades->links('vendor.pagination.custom') }}
             </div>
         @else
         <div style="text-align: center; padding: 48px 24px;">
