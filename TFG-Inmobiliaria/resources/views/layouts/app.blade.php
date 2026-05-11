@@ -170,6 +170,57 @@
         .filter-select:focus,
         .filter-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,110,248,.12); }
 
+        /* Global Loader */
+        #global-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 15, 20, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        #global-loader.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(59, 110, 248, 0.1);
+            border-top-color: #3b6ef8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
         .grid { display: grid; gap: 24px; }
         .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
         .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
@@ -239,6 +290,12 @@
 </head>
 
 <body>
+    <!-- Global Loader -->
+    <div id="global-loader" aria-busy="false">
+        <div class="loader-spinner"></div>
+        <p class="loader-text">Cargando...</p>
+    </div>
+
     @include('layouts.navbar')
     <div class="layout-container">
         @include('layouts.sidebar')
@@ -281,6 +338,25 @@
                 loader.setAttribute('aria-busy', 'false');
                 loader.classList.remove('show');
             }
+        }
+
+        // Mostrar loader cuando la página inicia la carga
+        window.addEventListener('beforeunload', function() {
+            showGlobalLoader();
+        });
+
+        // Ocultar loader cuando la página ha cargado completamente
+        window.addEventListener('load', function() {
+            hideGlobalLoader();
+        });
+
+        // También ocultar si la página está lista (para navegación desde cache)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                hideGlobalLoader();
+            });
+        } else {
+            hideGlobalLoader();
         }
 
         function showDatabaseError() {

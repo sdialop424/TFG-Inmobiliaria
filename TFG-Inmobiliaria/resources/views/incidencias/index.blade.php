@@ -8,13 +8,11 @@
     <p class="page-subtitle">Gestiona todas las incidencias del sistema</p>
 </div>
 
-@if(isset($propiedades) && $propiedades->count() > 0)
-    <div class="mb-4 d-flex gap-2 flex-wrap">
-        <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nueva Incidencia
-        </a>
-    </div>
-@endif
+<div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+    <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Nueva Incidencia
+    </a>
+</div>
 
 <div class="card">
     <div class="card-header">

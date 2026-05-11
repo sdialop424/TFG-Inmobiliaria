@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+use Illuminate\Database\QueryException;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,5 +20,19 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+
+        $exceptions->render(function (
+            PDOException|QueryException $e,
+            $request
+        ) {
+
+            return response()->view(
+                'errors.database',
+                [
+                    'mensaje' => 'La base de datos no está disponible.'
+                ],
+                503
+            );
+        });
+
     })->create();

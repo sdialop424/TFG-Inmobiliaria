@@ -61,16 +61,50 @@
 
 <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: 24px;">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ request('show_all') ? 'Todas las Incidencias' : 'Últimas Incidencias' }}</h3>
+        <div class="card-header" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
 
-        
-            @if(!request('show_all'))
-                <a href="{{ route('dashboard.index', ['show_all' => 1]) }}" class="btn btn-sm btn-outline">Ver todas</a>
-            @else
-                <a href="{{ route('dashboard.index') }}" class="btn btn-sm btn-outline">Ver últimas</a>
+    <h3 class="card-title">
+        {{ request('show_all') ? 'Todas las Incidencias' : 'Últimas Incidencias' }}
+    </h3>
+
+    <div style="display:flex; align-items:center; gap:12px;">
+
+        {{-- Buscador --}}
+        <form method="GET" action="{{ route('dashboard.index') }}">
+            @if(request('show_all'))
+                <input type="hidden" name="show_all" value="1">
             @endif
-        </div>
+
+            <input
+                type="text"
+                name="buscar"
+                placeholder="Buscar descripción..."
+                value="{{ request('buscar') }}"
+                class="form-control"
+                style="
+                    width: 260px;
+                    background: #0f172a;
+                    border: 1px solid #334155;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                "
+            >
+        </form>
+
+        {{-- Botón --}}
+        @if(!request('show_all'))
+            <a href="{{ route('dashboard.index', ['show_all' => 1]) }}" class="btn btn-sm btn-outline">
+                Ver todas
+            </a>
+        @else
+            <a href="{{ route('dashboard.index') }}" class="btn btn-sm btn-outline">
+                Ver últimas
+            </a>
+        @endif
+
+    </div>
+</div>
         <div class="card-body">
             @if($ultimas_incidencias->count() > 0)
             <table class="table">
