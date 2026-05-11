@@ -421,7 +421,10 @@
         });
 
         document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function() {
+            form.addEventListener('submit', function(event) {
+                if (form.classList.contains('form-eliminar')) {
+                    return;
+                }
                 showGlobalLoader();
             });
         });
