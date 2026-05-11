@@ -36,7 +36,6 @@ class StoreIncidenciaRequest extends FormRequest
             'descripcion' => 'required|string',
             'tipo_incidencia_id' => 'required|exists:tipos_incidencia,id',
             'estado_incidencia_id' => 'required|exists:estados_incidencia,id',
-            'fecha_reporte' => 'required|date',
         ];
     }
 }

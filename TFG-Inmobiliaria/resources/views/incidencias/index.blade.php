@@ -8,11 +8,13 @@
     <p class="page-subtitle">Gestiona todas las incidencias del sistema</p>
 </div>
 
-<div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
-    <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Nueva Incidencia
-    </a>
-</div>
+@if(isset($propiedades) && $propiedades->count() > 0)
+    <div class="mb-4 d-flex gap-2 flex-wrap">
+        <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nueva Incidencia
+        </a>
+    </div>
+@endif
 
 <div class="card">
     <div class="card-header">
@@ -91,9 +93,7 @@
             <div style="font-size: 48px; color: var(--primary); margin-bottom: 16px; opacity: 0.5;">
                 <i class="fas fa-exclamation-circle"></i>
             </div>
-            <p style="color: var(--text-muted); margin-bottom: 24px;">No hay incidencias registradas</p>
-            <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Crear la primera incidencia
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Necesitas propiedades registradas para crear incidencias.</p>
             </a>
         </div>
         @endif

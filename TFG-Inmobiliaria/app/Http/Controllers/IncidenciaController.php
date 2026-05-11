@@ -29,7 +29,7 @@ class IncidenciaController extends Controller
         $user = Auth::user(); 
         $info = ['mostrarBotones' => $user->isAdmin()];
 
-        $query = Incidencia::with(['propiedad', 'tipoIncidencia', 'estadoIncidencia'])->orderBy('id', 'asc');
+        $query = Incidencia::with(['propiedad', 'tipoIncidencia', 'estadoIncidencia'])->orderBy('created_at', 'desc');
 
         if (! $user->isAdmin()) {
             $query->whereHas('propiedad', function($query) use ($user) {
@@ -102,11 +102,7 @@ class IncidenciaController extends Controller
 {
     $user = Auth::user(); 
 
-    $incidencias = Incidencia::with(['propiedad', 'estadoIncidencia'])
-        ->latest()
-        ->take(5)
-        ->get();
-
+    $incidencias = Incidencia::with(['propiedad', 'estadoIncidencia'])->latest()->take(5)->get();
     return view('dashboard', compact('incidencias'));
 }
 }

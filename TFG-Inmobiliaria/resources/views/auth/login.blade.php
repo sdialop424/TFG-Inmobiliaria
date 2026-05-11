@@ -297,13 +297,6 @@
                     @enderror
                 </div>
 
-                <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                        Recordarme
-                    </label>
-                </div>
-
                 <button type="submit" class="btn-login">
                     <i class="fas fa-arrow-right-to-bracket"></i>
                     Iniciar sesión

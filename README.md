@@ -18,10 +18,10 @@
 ## 🛠️ Stack tecnológico
 
 - **Backend:** Laravel 12 (PHP 8.2+)
-- **Frontend:** Blade + TailwindCSS
+- **Frontend:** Blade + CSS + JS
 - **Base de datos:** MySQL
 - **Entorno:** Docker 
-- **Assets:** Vite
+
 
 ---
 
@@ -77,13 +77,12 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 
 - Contadores de propiedades e incidencias
 - Últimas incidencias
-- Últimos usuarios (admin)
 
 ## 🏠 Propiedades
 
 - Listado (global o filtrado por usuario)
 - Crear, ver, editar y eliminar (admin)
-- Detalle con incidencias relacionadas
+- Detalles de las incidencias relacionadas
 
 ## 🛠️ Incidencias
 
@@ -138,10 +137,9 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 
 ## Frontend
 
-- Blade Templates
-- TailwindCSS
-- Vite
-- Font Awesome
+- Blade
+- Css
+- Java Script
 
 ## Backend
 
@@ -193,7 +191,6 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 - Docker
 - Laravel Sail
 - MySQL 8
-- Vite (build de producción)
 
 ---
 
@@ -229,3 +226,5 @@ ComunIpanema resuelve una necesidad real en la gestión de comunidades de propie
 - Exportación de informes
 - Integración con calendarios
 - Sistema de avisos en tiempo real
+- Noticias de juntas 
+- Foro para puesta en comun de mejoras entre usuarios 
