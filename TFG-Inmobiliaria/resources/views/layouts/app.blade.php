@@ -299,7 +299,6 @@
             .filter-select, .filter-input { max-width: 100%; margin-top: 4px; }
         }
     </style>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
 </head>
 
