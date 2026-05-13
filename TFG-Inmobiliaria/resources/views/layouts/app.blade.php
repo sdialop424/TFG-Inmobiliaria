@@ -297,7 +297,119 @@
             nav[aria-label="Pagination Navigation"] { gap: 4px; }
             nav[aria-label="Pagination Navigation"] .inline-flex { min-width: 36px; min-height: 36px; padding: 0 10px !important; font-size: 12px; }
             .filter-select, .filter-input { max-width: 100%; margin-top: 4px; }
-        }
+
+
+            .responsive-table-wrap {
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .responsive-incidencias {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+
+            .responsive-incidencias th,
+            .responsive-incidencias td {
+                padding: 12px;
+                vertical-align: middle;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .col-desc {
+                width: 30%;
+            }
+
+            .col-prop {
+                width: 25%;
+            }
+
+            .optional-col {
+                width: 10%;
+            }
+
+            .col-fecha {
+                width: 15%;
+            }
+
+            .col-actions {
+                width: 10%;
+                text-align: center;
+            }
+
+            .accordion-btn {
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                font-size: 14px;
+                color: var(--text-primary);
+            }
+
+            .accordion-content {
+                display: none;
+            }
+
+            .accordion-content td {
+                padding: 0;
+                border: 0;
+                background: var(--bg-card);
+            }
+
+            .accordion-content.active {
+                display: table-row;
+            }
+
+            .accordion-box {
+                padding: 16px;
+            }
+
+            .accordion-grid {
+                display: grid;
+                grid-template-columns: 120px 1fr;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            .accordion-actions {
+                display: flex;
+                gap: 10px;
+            }
+
+            @media (max-width: 900px) {
+                .col-desc,
+                .col-prop {
+                    width: 50%;
+                    white-space: normal;
+                    word-break: break-word;
+                }
+                
+                .optional-col {
+                    display: none !important;
+                }
+                
+                .accordion-btn {
+                    display: inline-block;
+                }
+            }
+
+            @media (min-width: 901px) {
+                .accordion-btn {
+                    display: none;
+                }
+                
+                .accordion-content,
+                .accordion-content.active {
+                    display: none !important;
+                }
+            }
+
+            .mobile-only {
+                display: none;
+            }
+        
     </style>
     @yield('styles')
 </head>

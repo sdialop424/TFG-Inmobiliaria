@@ -20,69 +20,60 @@
     </div>
     <div class="card-body">
         @if($incidencias->count() > 0)
-            <table class="table">
+        <div class="responsive-table-wrap">
+            <table class="table responsive-incidencias">
                 <thead>
                     <tr>
-                        
-                        <th>Descripcion</th>
-                        <th>Propiedad</th>
-                        <th>Tipo
-                            <select id="typeFilter" class="filter-select">
-                                <option value="">Todos</option>
-                                <option value="Reparación">Reparación</option>
-                                <option value="Mantenimiento">Mantenimiento</option>
-                                <option value="Limpieza">Limpieza</option>
-                            </select>
-                        </th>
-                        <th>Estado
-                            <select id="statusFilter" class="filter-select">
-                                <option value="">Todos</option>
-                                <option value="PENDIENTE">Pendiente</option>
-                                <option value="EN PROGRESO">En progreso</option>
-                                <option value="RESUELTA">Resuelta</option>
-                            </select>
-                        </th>
-                        <th>Fecha
-                            <input type="date" id="dateFilter" class="filter-input">
-                        </th>
-                        <th>Acciones</th>
+                        <th class="col-desc">Descripción</th>
+                        <th class="col-prop">Propiedad</th>
+                        <th class="optional-col col-tipo">Tipo</th>
+                        <th class="optional-col col-estado">Estado</th>
+                        <th class="optional-col col-fecha">Fecha</th>
+                        <th class="col-actions">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($incidencias as $incidencia)
-                    <tr>
-                        <td style="font-weight: 500;">{{ $incidencia->descripcion }}</td>
-                        <td>{{ $incidencia->propiedad->direccion ?? 'N/A' }}</td>
-                        <td>
+                    <tr class="inc-row">
+                        <td class="col-desc">{{ $incidencia->descripcion }}</td>
+                        <td class="col-prop">{{ $incidencia->propiedad->direccion ?? 'N/A' }}</td>
+                        <td class="optional-col">
                             <span class="badge badge-secondary">{{ $incidencia->tipoIncidencia->nombre ?? 'N/A' }}</span>
                         </td>
-                        <td>
-                            <span class="badge badge-{{ strtolower($incidencia->estadoIncidencia->nombre ?? 'pendiente') }}">
-                                {{ $incidencia->estadoIncidencia->nombre ?? 'N/A' }}
-                            </span>
+                        <td class="optional-col">
+                            <span class="badge badge-{{ strtolower($incidencia->estadoIncidencia->nombre ?? 'pendiente') }}">{{ $incidencia->estadoIncidencia->nombre ?? 'N/A' }}</span>
                         </td>
-                        <td style="font-size: 13px; color: var(--text-muted);">{{ $incidencia->created_at->format('d/m/Y H:i') }}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <a href="{{ route('incidencias.show', $incidencia) }}" class="btn btn-sm btn-outline">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('incidencias.edit', $incidencia) }}" class="btn btn-sm btn-outline">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" class="form-eliminar" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                        <td class="optional-col">{{ $incidencia->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="col-actions">
+                            <button class="accordion-btn">▼</button>
+                        </td>
+                    </tr>
+                    <tr class="accordion-content">
+                        <td colspan="6">
+                            <div class="accordion-box">
+                                <div class="accordion-grid">
+                                    <strong>Tipo:</strong>
+                                    <span>{{ $incidencia->tipoIncidencia->nombre ?? 'N/A' }}</span>
+                                    <strong>Estado:</strong>
+                                    <span>{{ $incidencia->estadoIncidencia->nombre ?? 'N/A' }}</span>
+                                    <strong>Fecha:</strong>
+                                    <span>{{ $incidencia->created_at->format('d/m/Y H:i') }}</span>
+                                </div>
+                                <div class="accordion-actions">
+                                    <a href="{{ route('incidencias.show', $incidencia) }}" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('incidencias.edit', $incidencia) }}" class="btn btn-sm btn-outline"><i class="fas fa-edit"></i></a>
+                                    <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" class="form-eliminar" style="display:inline;">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+        </div>
             <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
                 {{ $incidencias->links('vendor.pagination.custom') }}
             </div>
@@ -132,9 +123,29 @@
             });
         }
 
-        typeFilter.addEventListener('change', filterIncidencias);
-        statusFilter.addEventListener('change', filterIncidencias);
-        dateFilter.addEventListener('change', filterIncidencias);
+        if (typeFilter) typeFilter.addEventListener('change', filterIncidencias);
+        if (statusFilter) statusFilter.addEventListener('change', filterIncidencias);
+        if (dateFilter) dateFilter.addEventListener('change', filterIncidencias);
     });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const rows = document.querySelectorAll('.inc-row');
+    
+    rows.forEach(row => {
+        const button = row.querySelector('.accordion-btn');
+        const accordion = row.nextElementSibling;
+        
+        const toggleAccordion = () => {
+            accordion.classList.toggle('active');
+            button.textContent = accordion.classList.contains('active') ? '▲' : '▼';
+        };
+        
+        button.addEventListener('click', toggleAccordion);
+        row.addEventListener('click', (e) => {
+            if (e.target !== button) toggleAccordion();
+        });
+    });
+});
 </script>
 @endsection
