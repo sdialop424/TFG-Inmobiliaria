@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Rol;
@@ -17,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all()->sortByDesc('updated_at');
+        $users = User::orderBy('updated_at', 'desc')->paginate(15);
         return view('users.index', compact('users'));
     }
 
@@ -87,6 +88,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        abort_if($user->id === Auth::id(), 403, 'No puedes eliminarte a ti mismo');
         $user->delete();
         return redirect(route('users.index'));
     }
@@ -94,5 +96,19 @@ class UserController extends Controller
     public function restore(User $user) {
         $user->restore();
         return redirect(route('users.index'));
+    }
+
+    public function showChangePasswordForm()
+    {
+        return view('users.change-password');
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        Auth::user()->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->route('users.show', Auth::id())->with('success', 'Contraseña actualizada correctamente.');
     }
 }

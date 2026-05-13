@@ -25,16 +25,16 @@ class DashboardController extends Controller
         $propiedades_count = $propiedades->count();
 
         // Incidencias
-        if ($user->isAdmin()) {
-            $incidencias = Incidencia::orderBy('created_at', 'desc')->get();
-        } else {
-            $incidencias = Incidencia::whereHas('propiedad', function($query) use ($user) {
+        $incidenciasQuery = Incidencia::query();
+
+        if (!$user->isAdmin()) {
+            $incidenciasQuery->whereHas('propiedad', function($query) use ($user) {
                 $query->where('usuario_id', $user->id);
-            })->orderBy('created_at', 'desc')->get();
+            });
         }
 
-        $incidencias_resueltas = $incidencias->where('estado_incidencia_id', 3)->count();
-        $incidencias_pendientes = $incidencias->where('estado_incidencia_id', '!=', 3)->count();
+        $incidencias_resueltas = (clone $incidenciasQuery)->where('estado_incidencia_id', 3)->count();
+        $incidencias_pendientes = (clone $incidenciasQuery)->where('estado_incidencia_id', '!=', 3)->count();
 
         // BUSCADOR
         $buscar = request('buscar');

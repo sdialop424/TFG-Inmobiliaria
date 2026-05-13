@@ -24,7 +24,7 @@ class IncidenciaController extends Controller
         $this->incidenciaService = $incidenciaService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user(); 
         $info = ['mostrarBotones' => $user->isAdmin()];
@@ -37,7 +37,19 @@ class IncidenciaController extends Controller
             });
         }
 
-        $incidencias = $query->paginate(10);
+        $query->when($request->filled('tipo'), function($q) use ($request) {
+            $q->whereHas('tipoIncidencia', fn($sq) => $sq->where('nombre', $request->tipo));
+        });
+
+        $query->when($request->filled('estado'), function($q) use ($request) {
+            $q->whereHas('estadoIncidencia', fn($sq) => $sq->where('nombre', $request->estado));
+        });
+
+        $query->when($request->filled('fecha'), function($q) use ($request) {
+            $q->whereDate('created_at', $request->fecha);
+        });
+
+        $incidencias = $query->paginate(10)->withQueryString();
 
         return view('incidencias.index', compact('incidencias', 'info'));
     }
@@ -66,6 +78,8 @@ class IncidenciaController extends Controller
     {
         $user = auth()->user();
 
+        abort_unless($user->isAdmin() || $incidencia->propiedad->usuario_id === $user->id, 403);
+
         if ($user->isAdmin()) {
         $propiedades = Propiedad::all();
         } else {
@@ -77,6 +91,8 @@ class IncidenciaController extends Controller
 
     public function edit(Incidencia $incidencia)
     {
+        abort_unless(auth()->user()->isAdmin() || $incidencia->propiedad->usuario_id === auth()->id(), 403);
+
         $estados = EstadoIncidencia::all(); 
         $tipos = TipoIncidencia::all();
         $user = Auth::user();
@@ -98,11 +114,4 @@ class IncidenciaController extends Controller
         return redirect()->route('incidencias.index')->with('success', 'Incidencia eliminada exitosamente');
     }
     
-    public function dashboard()
-{
-    $user = Auth::user(); 
-
-    $incidencias = Incidencia::with(['propiedad', 'estadoIncidencia'])->latest()->take(5)->get();
-    return view('dashboard', compact('incidencias'));
-}
 }

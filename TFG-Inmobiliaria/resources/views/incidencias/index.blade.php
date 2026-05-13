@@ -14,6 +14,27 @@
     </a>
 </div>
 
+<form method="GET" action="{{ route('incidencias.index') }}" style="margin-bottom: 24px;">
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+        <select name="tipo" onchange="this.form.submit()">
+            <option value="">Todos los tipos</option>
+            <option value="Reparación" {{ request('tipo') == 'Reparación' ? 'selected' : '' }}>Reparación</option>
+            <option value="Mantenimiento" {{ request('tipo') == 'Mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
+            <option value="Limpieza" {{ request('tipo') == 'Limpieza' ? 'selected' : '' }}>Limpieza</option>
+        </select>
+        <select name="estado" onchange="this.form.submit()">
+            <option value="">Todos los estados</option>
+            <option value="PENDIENTE" {{ request('estado') == 'PENDIENTE' ? 'selected' : '' }}>PENDIENTE</option>
+            <option value="EN PROGRESO" {{ request('estado') == 'EN PROGRESO' ? 'selected' : '' }}>EN PROGRESO</option>
+            <option value="RESUELTO" {{ request('estado') == 'RESUELTO' ? 'selected' : '' }}>RESUELTO</option>
+        </select>
+        <input type="date" name="fecha" value="{{ request('fecha') }}" onchange="this.form.submit()">
+        @if(request('tipo') || request('estado') || request('fecha'))
+            <a href="{{ route('incidencias.index') }}" class="btn btn-sm btn-outline">Limpiar filtros</a>
+        @endif
+    </div>
+</form>
+
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Listado de Incidencias</h3>
@@ -26,25 +47,9 @@
                         
                         <th>Descripcion</th>
                         <th>Propiedad</th>
-                        <th>Tipo
-                            <select id="typeFilter" class="filter-select">
-                                <option value="">Todos</option>
-                                <option value="Reparación">Reparación</option>
-                                <option value="Mantenimiento">Mantenimiento</option>
-                                <option value="Limpieza">Limpieza</option>
-                            </select>
-                        </th>
-                        <th>Estado
-                            <select id="statusFilter" class="filter-select">
-                                <option value="">Todos</option>
-                                <option value="PENDIENTE">Pendiente</option>
-                                <option value="EN PROGRESO">En progreso</option>
-                                <option value="RESUELTO">Resuelto</option>
-                            </select>
-                        </th>
-                        <th>Fecha
-                            <input type="date" id="dateFilter" class="filter-input">
-                        </th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -98,44 +103,5 @@
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const typeFilter = document.getElementById('typeFilter');
-        const statusFilter = document.getElementById('statusFilter');
-        const dateFilter = document.getElementById('dateFilter');
-        const tableRows = document.querySelectorAll('.card-body table tbody tr');
-
-        function normalizeText(text) {
-            return text.trim().replace(/\s+/g, ' ').toUpperCase();
-        }
-
-        function filterIncidencias() {
-            const selectedType = normalizeText(typeFilter.value || '');
-            const selectedStatus = normalizeText(statusFilter.value || '');
-            const selectedDate = dateFilter.value;
-
-            tableRows.forEach(row => {
-                const columns = row.querySelectorAll('td');
-                const typeText = normalizeText(columns[2]?.textContent || '');
-                const statusText = normalizeText(columns[3]?.textContent || '');
-                const dateText = (columns[4]?.textContent || '').trim();
-                const formattedDate = dateText ? dateText.split(' ')[0].split('/').reverse().join('-') : '';
-
-                const matchesType = !selectedType || typeText === selectedType;
-                const matchesStatus = !selectedStatus || statusText === selectedStatus;
-                const matchesDate = !selectedDate || formattedDate === selectedDate;
-
-                row.style.display = (matchesType && matchesStatus && matchesDate) ? '' : 'none';
-            });
-        }
-
-        typeFilter.addEventListener('change', filterIncidencias);
-        statusFilter.addEventListener('change', filterIncidencias);
-        dateFilter.addEventListener('change', filterIncidencias);
-    });
-</script>
 @endsection
 

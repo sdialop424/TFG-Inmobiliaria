@@ -33,8 +33,14 @@ class User extends Authenticatable
         return $this->belongsTo(Rol::class);
     }
 
-    public function isAdmin() : bool {
-        $rolAdmin = Rol::where('slug', 'admin')->first();
-        return $this->rol && $this->rol->slug === $rolAdmin->slug;
+    public function isAdmin(): bool
+    {
+        return $this->rol?->slug === 'admin';
+    }
+
+    public function propiedades()
+    {
+        return $this->hasMany(Propiedad::class, 'usuario_id');
     }
 }
+

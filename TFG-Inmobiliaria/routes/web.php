@@ -22,7 +22,7 @@ Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/react-demo', function () {
@@ -36,11 +36,10 @@ Route::middleware('auth')->group(function () {
         ->parameters(['incidencias' => 'incidencia']);
 
     // CRUD usuarios solo para usuarios logueados
+    Route::get('/users/change-password', [UserController::class, 'showChangePasswordForm'])
+        ->name('users.showChangePassword');
+    Route::patch('/users/password', [UserController::class, 'changePassword'])
+        ->name('users.changePassword');
     Route::resource('users', UserController::class)->except(['create','store']);
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
-
-    Route::get('/incidencias', [IncidenciaController::class, 'index'])
-    ->name('incidencias.index');
 });

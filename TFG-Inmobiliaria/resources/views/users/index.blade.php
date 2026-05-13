@@ -61,6 +61,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $users->links() }}
         @else
         <div style="text-align: center; padding: 48px 24px;">
             <div style="font-size: 48px; color: var(--primary); margin-bottom: 16px; opacity: 0.5;">

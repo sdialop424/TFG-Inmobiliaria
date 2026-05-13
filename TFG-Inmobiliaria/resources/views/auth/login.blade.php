@@ -304,9 +304,7 @@
                     <i class="fas fa-arrow-right-to-bracket"></i>
                     Iniciar sesión
                 </button>
-                 <div class="login-footer" style="padding-top: 16px; padding-bottom: 0; ">
-            ¿No tienes cuenta? <a href="{{ route('users.create') }}">Regístrate aquí</a>
-        </div>
+              
             </form>
         </div>
 
