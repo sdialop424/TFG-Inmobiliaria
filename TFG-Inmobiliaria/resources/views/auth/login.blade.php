@@ -20,6 +20,8 @@
         body {
             font-family: var(--font);
             background: var(--bg-base);
+            background-size: cover;
+            background-position: center;
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
@@ -43,6 +45,7 @@
         
 
         .login-title {
+        
             font-size: 26px;
             font-weight: 700;
             letter-spacing: -.5px;
@@ -236,7 +239,7 @@
     <div class="login-wrapper">
         <div class="login-header">
             <h1 class="login-title">Bienvenido</h1>
-            <p class="login-subtitle">Inicia sesión para continuar</p>
+           <p class="login-subtitle">Inicia sesión para continuar</p>
         </div>
 
         <div class="login-card">
@@ -301,12 +304,13 @@
                     <i class="fas fa-arrow-right-to-bracket"></i>
                     Iniciar sesión
                 </button>
+                 <div class="login-footer" style="padding-top: 16px; padding-bottom: 0; ">
+            ¿No tienes cuenta? <a href="{{ route('users.create') }}">Regístrate aquí</a>
+        </div>
             </form>
         </div>
 
-        <div class="login-footer">
-            ¿No tienes cuenta? <a href="{{ route('users.create') }}">Regístrate aquí</a>
-        </div>
+       
         
     </div>
 </body>

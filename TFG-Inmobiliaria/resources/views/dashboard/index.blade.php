@@ -67,10 +67,10 @@
         {{ request('show_all') ? 'Todas las Incidencias' : 'Últimas Incidencias' }}
     </h3>
 
-    <div style="display:flex; align-items:center; gap:12px;">
+    <div class="search-actions">
 
         {{-- Buscador --}}
-        <form method="GET" action="{{ route('dashboard.index') }}">
+        <form method="GET" action="{{ route('dashboard.index') }}" style="width: 100%; max-width: 320px;">
             @if(request('show_all'))
                 <input type="hidden" name="show_all" value="1">
             @endif
@@ -80,15 +80,7 @@
                 name="buscar"
                 placeholder="Buscar descripción..."
                 value="{{ request('buscar') }}"
-                class="form-control"
-                style="
-                    width: 260px;
-                    background: #0f172a;
-                    border: 1px solid #334155;
-                    color: white;
-                    padding: 8px 12px;
-                    border-radius: 8px;
-                "
+                class="form-control search-input"
             >
         </form>
 

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --bg-base: #0d0f14; --bg-surface: #13161e; --bg-card: #1a1e2a;
+            --bg-base: url('/ipanema.jpg'); --bg-surface: #13161e; --bg-card: #1a1e2a;
             --border: #252a38; --border-light: #2e3447;
             --primary: #3b6ef8; --primary-glow: rgba(59,110,248,.25); --primary-dark: #2a57d4;
             --text-primary: #f0f2f8; --text-secondary: #8892aa; --text-muted: #4d576e;
@@ -20,6 +20,8 @@
         body {
             font-family: var(--font);
             background: var(--bg-base);
+            background-size: cover;
+            background-position: center;
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;

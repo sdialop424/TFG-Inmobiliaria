@@ -205,7 +205,8 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 | Dashboard y permisos | ✅ Completado |
 | CRUD Usuarios | ✅ Completado |
 | Refinamiento UI |✅ Completado |
-| Pruebas y despliegue |  En Progreso |
+| Pruebas y despliegue | ✅ Completado |
+| Documentacion y video | En progreso |
 
 ---
 
@@ -228,3 +229,4 @@ ComunIpanema resuelve una necesidad real en la gestión de comunidades de propie
 - Sistema de avisos en tiempo real
 - Noticias de juntas 
 - Foro para puesta en comun de mejoras entre usuarios 
+- Si la aplicacion llega a varias podria tener una base da datos multitenant 
