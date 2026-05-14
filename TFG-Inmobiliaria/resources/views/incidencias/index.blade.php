@@ -77,7 +77,7 @@
                             <div class="desktop-actions">
                                 <a href="{{ route('incidencias.show', $incidencia) }}" class="btn btn-sm btn-outline" title="Ver"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('incidencias.edit', $incidencia) }}" class="btn btn-sm btn-outline" title="Editar"><i class="fas fa-edit"></i></a>
-                                <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" class="inline-form">
+                                <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" class="inline-form form-eliminar">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fas fa-trash"></i></button>
                                 </form>
