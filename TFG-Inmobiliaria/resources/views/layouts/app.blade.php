@@ -319,6 +319,36 @@
                 white-space: nowrap;
             }
 
+            .responsive-incidencias .col-desc {
+                display: none;
+            }
+
+            .responsive-incidencias .col-prop {
+                width: 85%;
+                text-overflow: unset;
+                white-space: normal;
+            }
+
+            .responsive-incidencias .col-actions {
+                width: 15%;
+            }
+
+            .responsive-incidencias th.col-actions {
+                color: transparent;
+                position: relative;
+            }
+
+            .responsive-incidencias th.col-actions::before {
+                content: "\f141";
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                color: var(--text-secondary);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
             .col-desc {
                 width: 30%;
             }
@@ -336,9 +366,15 @@
             }
 
             .col-actions {
-                width: 10%;
-                text-align: center;
-            }
+    width: 10%;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .col-actions {
+        width: 100%;
+    }
+}
 
             .accordion-btn {
                 border: none;
@@ -346,6 +382,48 @@
                 cursor: pointer;
                 font-size: 14px;
                 color: var(--text-primary);
+            }
+
+            .responsive-incidencias .desktop-actions {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .responsive-incidencias .mobile-toggle {
+                display: none !important;
+            }
+
+            .responsive-incidencias .accordion-content {
+                display: none !important;
+            }
+
+            .inline-form {
+                display: inline-flex;
+                margin: 0;
+            }
+
+            .table-filters {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+                align-items: flex-end;
+                margin-bottom: 18px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid rgba(255,255,255,.08);
+            }
+
+            .table-filters .filter-item {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .filter-actions {
+                display: flex;
+                gap: 10px;
+                align-items: center;
             }
 
             .accordion-content {
@@ -390,18 +468,33 @@
                     display: none !important;
                 }
                 
-                .accordion-btn {
-                    display: inline-block;
+                .responsive-incidencias .desktop-actions {
+                    display: none !important;
+                }
+                
+                .responsive-incidencias .accordion-btn.mobile-toggle {
+                    display: inline-block !important;
+                }
+
+                .responsive-incidencias .accordion-btn:not(.mobile-toggle) {
+                    display: none !important;
+                }
+
+                .responsive-incidencias .accordion-content.active {
+                    display: table-row !important;
                 }
             }
 
             @media (min-width: 901px) {
-                .accordion-btn {
-                    display: none;
+                .responsive-incidencias .accordion-btn.mobile-toggle {
+                    display: none !important;
                 }
                 
-                .accordion-content,
-                .accordion-content.active {
+                .responsive-incidencias .desktop-actions {
+                    display: flex !important;
+                }
+                
+                .responsive-incidencias .accordion-content {
                     display: none !important;
                 }
             }

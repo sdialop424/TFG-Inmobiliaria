@@ -19,6 +19,35 @@
         <h3 class="card-title">Listado de Incidencias</h3>
     </div>
     <div class="card-body">
+        <form method="GET" action="{{ route('incidencias.index') }}" class="table-filters">
+            <div class="filter-item">
+                <label for="typeFilter">Tipo</label>
+                <select id="typeFilter" name="tipo" class="filter-select">
+                    <option value="">Todos</option>
+                    @foreach($tipos as $tipo)
+                        <option value="{{ $tipo->nombre }}" {{ request('tipo') === $tipo->nombre ? 'selected' : '' }}>{{ $tipo->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="statusFilter">Estado</label>
+                <select id="statusFilter" name="estado" class="filter-select">
+                    <option value="">Todos</option>
+                    @foreach($estados as $estado)
+                        <option value="{{ $estado->nombre }}" {{ request('estado') === $estado->nombre ? 'selected' : '' }}>{{ $estado->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="dateFilter">Fecha</label>
+                <input id="dateFilter" type="date" name="fecha" class="filter-input" value="{{ request('fecha') }}" />
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+                <a href="{{ route('incidencias.index') }}" class="btn btn-outline btn-sm">Limpiar</a>
+            </div>
+        </form>
+
         @if($incidencias->count() > 0)
         <div class="responsive-table-wrap">
             <table class="table responsive-incidencias">
@@ -45,10 +74,18 @@
                         </td>
                         <td class="optional-col">{{ $incidencia->created_at->format('d/m/Y H:i') }}</td>
                         <td class="col-actions">
-                            <button class="accordion-btn">▼</button>
+                            <div class="desktop-actions">
+                                <a href="{{ route('incidencias.show', $incidencia) }}" class="btn btn-sm btn-outline" title="Ver"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('incidencias.edit', $incidencia) }}" class="btn btn-sm btn-outline" title="Editar"><i class="fas fa-edit"></i></a>
+                                <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" class="inline-form">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
+                            <button class="accordion-btn mobile-toggle">▼</button>
                         </td>
                     </tr>
-                    <tr class="accordion-content">
+                    <tr class="accordion-content" style="display:none;">
                         <td colspan="6">
                             <div class="accordion-box">
                                 <div class="accordion-grid">
@@ -97,7 +134,7 @@
         const typeFilter = document.getElementById('typeFilter');
         const statusFilter = document.getElementById('statusFilter');
         const dateFilter = document.getElementById('dateFilter');
-        const tableRows = document.querySelectorAll('.card-body table tbody tr');
+        const tableRows = document.querySelectorAll('.card-body table tbody tr.inc-row');
 
         function normalizeText(text) {
             return text.trim().replace(/\s+/g, ' ').toUpperCase();
@@ -131,19 +168,41 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const rows = document.querySelectorAll('.inc-row');
+    const mobileToggleButtons = document.querySelectorAll('.accordion-btn.mobile-toggle');
+    const desktopActionGroups = document.querySelectorAll('.desktop-actions');
+
+    const updateToggleVisibility = () => {
+        const showMobileToggle = window.innerWidth <= 900;
+        mobileToggleButtons.forEach(btn => {
+            btn.style.display = showMobileToggle ? 'inline-block' : 'none';
+        });
+        desktopActionGroups.forEach(group => {
+            group.style.display = showMobileToggle ? 'none' : 'flex';
+        });
+    };
+
+    updateToggleVisibility();
+    window.addEventListener('resize', updateToggleVisibility);
     
     rows.forEach(row => {
-        const button = row.querySelector('.accordion-btn');
+        const button = row.querySelector('.accordion-btn.mobile-toggle');
         const accordion = row.nextElementSibling;
         
         const toggleAccordion = () => {
+            if (!button || window.innerWidth > 900) return;
             accordion.classList.toggle('active');
             button.textContent = accordion.classList.contains('active') ? '▲' : '▼';
         };
         
-        button.addEventListener('click', toggleAccordion);
+        if (button) {
+            button.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleAccordion();
+            });
+        }
+
         row.addEventListener('click', (e) => {
-            if (e.target !== button) toggleAccordion();
+            if (window.innerWidth <= 900 && e.target !== button) toggleAccordion();
         });
     });
 });

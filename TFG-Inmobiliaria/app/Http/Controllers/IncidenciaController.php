@@ -50,8 +50,10 @@ class IncidenciaController extends Controller
         });
 
         $incidencias = $query->paginate(10)->withQueryString();
+        $estados = EstadoIncidencia::all();
+        $tipos = TipoIncidencia::all();
 
-        return view('incidencias.index', compact('incidencias', 'info'));
+        return view('incidencias.index', compact('incidencias', 'info', 'tipos', 'estados'));
     }
 
     public function create(Request $request)
