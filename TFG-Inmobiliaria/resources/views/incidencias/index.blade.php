@@ -9,9 +9,11 @@
 </div>
 
 <div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
-    <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Nueva Incidencia
-    </a>
+    @if(($info['mostrarBotones'] ?? false) && ($info['hasPropiedades'] ?? false))
+        <a href="{{ route('incidencias.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nueva Incidencia
+        </a>
+    @endif
 </div>
 
 <div class="card">

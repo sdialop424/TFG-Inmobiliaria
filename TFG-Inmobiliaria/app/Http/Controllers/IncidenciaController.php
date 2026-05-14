@@ -27,7 +27,13 @@ class IncidenciaController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user(); 
-        $info = ['mostrarBotones' => $user->isAdmin()];
+        $propiedadesCount = $user->isAdmin()
+            ? Propiedad::count()
+            : Propiedad::where('usuario_id', $user->id)->count();
+        $info = [
+            'mostrarBotones' => $user->isAdmin(),
+            'hasPropiedades' => $propiedadesCount > 0,
+        ];
 
         $query = Incidencia::with(['propiedad', 'tipoIncidencia', 'estadoIncidencia'])->orderBy('created_at', 'desc');
 
@@ -62,6 +68,7 @@ class IncidenciaController extends Controller
         $tipos = TipoIncidencia::all();
         $user = Auth::user();
         $propiedades = $user->isAdmin() ? Propiedad::all() : Propiedad::where('usuario_id', $user->id)->get();
+        abort_if($propiedades->isEmpty(), 403);
         $usuarios = User::all();
         $selectedPropiedadId = $request->query('propiedad_id');
 
