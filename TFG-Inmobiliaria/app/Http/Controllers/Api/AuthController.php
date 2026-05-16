@@ -21,14 +21,10 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth-token')->plainTextToken;
 
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
             return response()->json(['token' => $token], 200);
         }
 
-            return response()->json(['error' => 'Las credenciales no son correctas.'], 401);
+        return response()->json(['error' => 'Las credenciales no son correctas.'], 401);
 
 
         
