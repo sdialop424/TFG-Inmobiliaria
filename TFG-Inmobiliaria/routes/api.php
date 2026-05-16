@@ -2,10 +2,13 @@
 use App\Http\Controllers\Api\IncidenciaController;
 use App\Http\Controllers\Api\PropiedadController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 
 Route::as('api.')->group(function () {
-    Route::apiResource("incidencias", IncidenciaController::class);
-    Route::apiResource("propiedades", PropiedadController::class);
-});
+        Route::get('incidencias', [IncidenciaController::class, 'index'])->middleware(['auth:sanctum']);
+        Route::get("propiedades", [PropiedadController::class, 'index'])->middleware(['auth:sanctum']);
+        Route::post('auth', [AuthController::class, 'login']);
+    });
+   
 

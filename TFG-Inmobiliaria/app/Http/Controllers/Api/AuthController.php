@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,12 +18,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-
             $user = Auth::user();
             $token = $user->createToken('auth-token')->plainTextToken;
-            return response()->json(['token' => $token], 200);
 
-            #return redirect()->intended('dashboard');
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return response()->json(['token' => $token], 200);
         }
 
             return response()->json(['error' => 'Las credenciales no son correctas.'], 401);
