@@ -17,13 +17,22 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
+
+            $user = Auth::user();
+            $token = $user->createToken('auth-token')->plainTextToken;
+            return response()->json(['token' => $token], 200);
+
+            #return redirect()->intended('dashboard');
         }
+
+            return response()->json(['error' => 'Las credenciales no son correctas.'], 401);
+
+
         
 
-        return back()->withErrors([
-            'email' => 'Las credenciales no son correctas.',
-        ]);
+        #return back()->withErrors([
+         #   'email' => 'Las credenciales no son correctas.',
+        #]);
     }
 
     public function logout ()
