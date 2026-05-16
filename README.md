@@ -11,7 +11,7 @@
 | Campo | Información |
 |---|---|
 | **Nombre del proyecto** | ComunIpanema |
-| **Temática** | Gestión inmobiliaria e incidencias |
+| **Temática** | Gestión de  incidencias para comunidades |
 | **Ciclo** | Desarrollo de Aplicaciones Web (DAW) |
 | **Curso** | 2025 / 2026 |
 
@@ -21,7 +21,7 @@
 - **Frontend:** Blade + CSS + JS
 - **Base de datos:** MySQL
 - **Entorno:** Docker 
-
+- **Despliegue:** AWS 
 
 ---
 
@@ -70,18 +70,18 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 ## 🔐 Autenticación
 
 - Login
-- Registro
+- Registro(el registro lo hace el administrador ya es para una comunidad cerrada )
 - Logout
 
 ## 📊 Dashboard
 
 - Contadores de propiedades e incidencias
-- Últimas incidencias
+- Últimas incidencias y Todas las incidencias 
 
 ## 🏠 Propiedades
 
-- Listado (global o filtrado por usuario)
-- Crear, ver, editar y eliminar (admin)
+- Listado (global para administrador  o filtrado por usuario)
+- Crear, editar y eliminar (admin) y ver por el usaurio 
 - Detalles de las incidencias relacionadas
 
 ## 🛠️ Incidencias
@@ -89,7 +89,7 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 - Listado
 - Crear incidencia
 - Ver detalle
-- Editar y eliminar (admin)
+- Editar y eliminar 
 
 ## 👤 Usuarios (Admin)
 
@@ -97,6 +97,10 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 - Ver perfil
 - Editar
 - Eliminar
+
+## 👤 Usuarios
+
+- Editar contraseña, nombre  y correo 
 
 ---
 
@@ -106,6 +110,7 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 
 - Administrador
 - Usuario
+- Propietario 
 
 ## Tipos de propiedad
 
@@ -229,4 +234,5 @@ ComunIpanema resuelve una necesidad real en la gestión de comunidades de propie
 - Sistema de avisos en tiempo real
 - Noticias de juntas 
 - Foro para puesta en comun de mejoras entre usuarios 
-- Si la aplicacion llega a varias podria tener una base da datos multitenant 
+- Si la aplicacion llega a una administracion con varias comunidades podria tener una base de datos multitenant 
+

@@ -8,6 +8,13 @@
     <p class="page-subtitle">Gestiona los usuarios del sistema</p>
 </div>
 
+<div style="margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+    @if(($info['mostrarBotones'] ?? false))
+        <a href="{{ route('users.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Usuario
+        </a>
+    @endif
+</div>
 
 
 <div class="card">

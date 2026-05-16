@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\Rol;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,8 +16,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            $info['mostrarBotones'] = true;
+        } else {
+            $info['mostrarBotones'] = false;
+        }
         $users = User::orderBy('updated_at', 'desc')->paginate(15);
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'info'));
     }
 
     /**
@@ -27,6 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        abort_unless(Auth::user()?->isAdmin(), 403);
         $roles = Rol::all();
         return view('users.create', compact('roles'));
     }
@@ -35,23 +40,19 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreUserRequest $request)
-{
-    $validated = $request->validated();
+    {
+        abort_unless(Auth::user()?->isAdmin(), 403);
+        $validated = $request->validated();
 
-    // Asignar contraseña encriptada
-    $validated['password'] = Hash::make($validated['password']);
+        // Asignar contraseña encriptada
+        $validated['password'] = Hash::make($validated['password']);
+        // Asignar rol por defecto (usuario común)
+        $validated['rol_id'] = 2;
+        // Crear usuario
+        $user = User::create($validated);
 
-    // Asignar rol por defecto (usuario común)
-    $validated['rol_id'] = 2;
-
-    // Crear usuario
-    $user = User::create($validated);
-
-    // Loguear automáticamente
-    Auth::login($user);
-
-    return redirect()->route('dashboard.index');
-}
+        return redirect()->route('users.show', $user)->with('success', 'Usuario creado correctamente.');
+    }
 
     /**
      * Display the specified resource.
@@ -67,6 +68,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        abort_unless(Auth::user()->isAdmin(), 403);
         $roles = Rol::all();
         return view('users.edit', compact('user', 'roles'));
     }
@@ -76,6 +78,7 @@ class UserController extends Controller
      */
     public function update(ChangePasswordRequest $request, User $user)
     {
+        abort_unless(Auth::user()?->isAdmin(), 403);
         $validate = $request->validated();
 
         $user->update($validate);
@@ -88,12 +91,15 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        abort_unless(Auth::user()?->isAdmin(), 403);
         abort_if($user->id === Auth::id(), 403, 'No puedes eliminarte a ti mismo');
         $user->delete();
         return redirect(route('users.index'));
     }
 
-    public function restore(User $user) {
+    public function restore(User $user)
+    {
+        abort_unless(Auth::user()?->isAdmin(), 403);
         $user->restore();
         return redirect(route('users.index'));
     }

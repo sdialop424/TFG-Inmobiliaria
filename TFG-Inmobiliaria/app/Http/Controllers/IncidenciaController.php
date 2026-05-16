@@ -112,6 +112,8 @@ class IncidenciaController extends Controller
 
     public function update(UpdateIncidenciaRequest $request, Incidencia $incidencia)
     {
+        abort_unless(auth()->user()->isAdmin() || $incidencia->propiedad->usuario_id === auth()->id(), 403);
+
         $validate = $request->validated();
         $this->incidenciaService->updateIncidencia($incidencia, $validate);
         return redirect()->route('incidencias.index')->with('success', 'Incidencia actualizada exitosamente');
@@ -119,6 +121,8 @@ class IncidenciaController extends Controller
 
     public function destroy(Incidencia $incidencia)
     {
+        abort_unless(auth()->user()->isAdmin() || $incidencia->propiedad->usuario_id === auth()->id(), 403);
+
         $this->incidenciaService->deleteIncidencia($incidencia);
         return redirect()->route('incidencias.index')->with('success', 'Incidencia eliminada exitosamente');
     }
