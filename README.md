@@ -286,8 +286,7 @@ De cara a la evolución tecnológica del ecosistema **ComunIpanema**, se propone
 
 1.  **Notificaciones en Tiempo Real (WebSockets):** Incorporación de **Laravel Reverb** o **Pusher** para alertar al instante al propietario cuando su incidencia sea transicionada a "En progreso" o "Resuelta".
 2.  **Aplicación Móvil Nativa (Android/iOS):** Desarrollo de un cliente ligero en **Flutter** o **React Native** para propietarios, el cual se comunicará de manera directa y segura con la API REST protegida por **Laravel Sanctum** ya disponible.
-3.  **Pasarela de Pagos Digitales (Stripe / PayPal):** Integración de cobros para permitir el pago seguro de recibos y cuotas de comunidad por parte de los propietarios directamente desde su portal.
-4.  **Generación de Informes en PDF Mensuales:** Tarea programada (*Cron Job* / *Laravel Scheduler*) que recopile gastos y resoluciones mensuales para generar un reporte y remitirlo automáticamente por correo a los administradores.
+3.  **Generación de Informes en PDF Mensuales:** Tarea programada (*Cron Job* / *Laravel Scheduler*) que recopile gastos y resoluciones mensuales para generar un reporte y remitirlo automáticamente por correo a los administradores.
 
 ---
 
