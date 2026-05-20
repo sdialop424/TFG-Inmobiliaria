@@ -21,8 +21,8 @@
 | Recurso | Enlace |
 |---|---|
 | **Aplicación Desplegada** | [Enlace a la aplicación desplegada](http://ec2-16-192-21-198.eu-north-1.compute.amazonaws.com/public/index.php) |
-Usuario demo (Admin) admin@admin.com / admin
-Usuario demo (User) sebas@sebas.com / 1234
+| **Usuario demo (Admin)** | admin@admin.com / admin|
+| **Usuario demo (User)** | sebas@sebas.com / 1234 |
 | **Prototipo Figma** | [Enlace al prototipo de Figma](https://www.figma.com/proto/87rLZHobm5bx1rnaha2zeL/Figma-TFg?node-id=0-1&t=oyr3chj3mYeaUFKi-1) |
 | **Video de Presentación** | [Enlace al video de presentación](https://placeholder-url-to-your-video.com) |
 
