@@ -210,8 +210,3 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 | Documentacion y video | En progreso |
 
 ---
-
-- Noticias de juntas 
-- Foro para puesta en comun de mejoras entre usuarios 
-- Si la aplicacion llega a una administracion con varias comunidades podria tener una base de datos multitenant 
-
