@@ -267,19 +267,6 @@ El desarrollo se estructuró a lo largo de las siguientes fases progresivas:
 | **Fase 8** | Pruebas automatizadas y despliegue AWS/Docker | ✅ Completado |
 | **Fase 9** | Documentación técnica final y video | En progreso |
 
-## 📝 11.2. Bitácora de Proyecto (Historial de Incidencias Solucionadas)
-Durante el desarrollo del sistema surgieron incidentes de arquitectura y persistencia que requirieron medidas técnicas correctivas:
-
-| # | Incidencia Identificada | Impacto Operativo | Causa Raíz | Solución Técnica Aplicada |
-|---|---|---|---|---|
-| **1** | **Excepciones de Claves Foráneas en Borrados** | Excepciones SQL de integridad referencial al intentar eliminar propiedades con incidencias vinculadas. | MySQL impedía el borrado estricto debido a restricciones de clave foránea activas sin comportamiento de cascada. | Se refactorizó la migración incorporando `onDelete('cascade')` en la tabla de incidencias o implementando lógica preventiva en la capa de servicios para archivar incidencias antes de purgar la propiedad. |
-| **2** | **Acceso Permisivo a Recursos Ajenos** | Usuarios con rol Propietario podían ver incidencias de otros vecinos modificando la ID numérica en la URL. | Los controladores realizaban consultas genéricas de modelo `Model::find($id)` sin restringir por la pertenencia del recurso al usuario activo. | Se reestructuraron las consultas del controlador del propietario común para canalizarlas mediante relaciones: `auth()->user()->propiedades()->findOrFail($id)`, obligando al framework a disparar un error `404 Not Found` en caso de manipulación. |
-| **3** | **Duplicidad de Código de Validación** | Discrepancia en reglas de datos entre la interfaz web Blade y los endpoints de la API REST. | Código de validación redundante programado directamente en los métodos de los controladores Web y API por separado. | Se aislaron las reglas de validación en clases **Form Requests** independientes. Tanto los controladores web como los API inyectan y comparten las mismas clases de validación (`StoreIncidenciaRequest`, etc.). |
-
-*Seguimiento del proyecto:* Se utilizó la metodología ágil **Scrum**, organizando tareas en sprints semanales. La estricta separación de responsabilidades a través de la Capa de Servicios permitió que el refinamiento frontend (estilos Vanilla CSS) no interfiriese con las pruebas unitarias de persistencia y lógica backend.
-
----
-
 # 🚀 12. Mejoras y Propuestas Futuras (Versión 2.0)
 
 De cara a la evolución tecnológica del ecosistema **ComunIpanema**, se proponen las siguientes extensiones de negocio:
