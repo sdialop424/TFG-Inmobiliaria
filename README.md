@@ -181,23 +181,19 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 
 # 🔗 9. Modelo Entidad-Relación
 
+<img width="581" height="601" alt="DiagramaER drawio (1)" src="https://github.com/user-attachments/assets/06c60788-0cee-4d71-b529-0d499a19ec29" />
+
+
 ## Relaciones principales
 
-- users → rols (N:1)
-- users → propiedades (1:N)
+- usuarios → roles (N:1)
+- usuarios → propiedades (1:N)
 - propiedades → incidencias (1:N)
 - incidencias → tipos_incidencia (N:1)
 - incidencias → estados_incidencia (N:1)
 
 ---
 
-# 🚀 10. Despliegue
-
-- Docker
-- Laravel Sail
-- MySQL 8
-
----
 
 # 📅 11. Planificación
 
@@ -215,23 +211,6 @@ Desarrollar una plataforma web full-stack para la gestión centralizada de propi
 
 ---
 
-# 🧾 12. Conclusión
-
-ComunIpanema resuelve una necesidad real en la gestión de comunidades de propietarios, ofreciendo:
-
-- Control centralizado
-- Seguimiento de incidencias
-- Paneles personalizados por rol
-- Arquitectura escalable
-
----
-
-# 🔮 Futuras mejoras
-
-- Notificaciones por email
-- Exportación de informes
-- Integración con calendarios
-- Sistema de avisos en tiempo real
 - Noticias de juntas 
 - Foro para puesta en comun de mejoras entre usuarios 
 - Si la aplicacion llega a una administracion con varias comunidades podria tener una base de datos multitenant 
