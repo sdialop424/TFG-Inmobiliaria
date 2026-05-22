@@ -16,9 +16,6 @@
         <div class="card-header">
             <h3 class="card-title">Información del Usuario</h3>
             <div style="display: flex; gap: 8px;">
-                <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">
-                    <i class="fas fa-edit"></i> Editar
-                </a>
                 @if(auth()->id() === $user->id)
                     <a href="{{ route('users.showChangePassword') }}" class="btn btn-sm btn-outline">
                         <i class="fas fa-lock"></i> Cambiar Contraseña
