@@ -31,20 +31,9 @@
                 </div>
             </div>
 
+           
 
-            <div class="form-group">
-                <label class="form-label" for="rol_id">Rol *</label>
-                <select id="rol_id" name="rol_id" class="form-select {{ $errors->has('rol_id') ? 'is-invalid' : '' }}" required>
-                    <option value="">Selecciona un rol</option>
-                    @forelse($roles as $role)
-                        <option value="{{ $role->id }}" {{ old('rol_id', $user->rol_id) == $role->id ? 'selected' : '' }}>{{ $role->nombre }}</option>
-                    @empty
-                        <option disabled>No hay roles disponibles</option>
-                    @endforelse
-                </select>
-                @error('rol_id') <div class="form-error"><i class="fas fa-circle-exclamation"></i> {{ $message }}</div> @enderror
-            </div>
-
+            
             <hr style="border: none; border-top: 1px solid var(--border); margin: 24px 0;">
             
 

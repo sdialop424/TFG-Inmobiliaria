@@ -21,17 +21,26 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+           
 
         $this->call([
-#para el video de presentación, no se han incluido las incidencias en el seeder, pero se pueden añadir fácilmente ejecutando el comando "php artisan make:seeder IncidenciaSeeder" y luego añadiendo el código necesario para crear incidencias de ejemplo.
+            
+
 
             RolSeeder::class,
             UserSeeder::class,
             TipoPropiedadSeeder::class,
-           # PropiedadSeeder::class, 
             EstadoIncidenciaSeeder::class,
             TipoIncidenciaSeeder::class,
-           # IncidenciaSeeder::class,
+            
+           
         ]);
+        if (app()->environment('local')) {
+            // Sólo se ejecutan estos seeders en el entorno local (desarrollo)
+            $this->call([
+                    PropiedadSeeder::class,
+                    IncidenciaSeeder::class,
+            ]);
+        }
     }
 }

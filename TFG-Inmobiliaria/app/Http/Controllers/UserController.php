@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -68,17 +69,17 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        abort_unless(Auth::user()->isAdmin(), 403);
-        $roles = Rol::all();
+        abort_unless(Auth::user()->isAdmin() || Auth::id() === $user->id, 403);
+        $roles = Auth::user()->isAdmin() ? Rol::all() : collect();
         return view('users.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ChangePasswordRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        abort_unless(Auth::user()?->isAdmin(), 403);
+        abort_unless(Auth::user()->isAdmin() || Auth::id() === $user->id, 403);
         $validate = $request->validated();
 
         $user->update($validate);
