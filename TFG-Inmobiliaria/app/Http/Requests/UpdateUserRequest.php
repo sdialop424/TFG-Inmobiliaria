@@ -23,6 +23,7 @@ class UpdateUserRequest extends FormRequest
                 'max:100',
                 Rule::unique('users')->ignore($this->user)
             ],
+            'rol_id' => 'sometimes|exists:rols,id',
         ];
     }
 }

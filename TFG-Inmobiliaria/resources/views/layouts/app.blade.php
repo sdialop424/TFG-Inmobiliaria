@@ -63,19 +63,28 @@
             }
         }
 
-        // Mostrar loader cuando la página inicia la carga
-        window.addEventListener('beforeunload', function() {
+       // Mostrar loader al salir de la página
+        window.addEventListener('beforeunload', function () {
             showGlobalLoader();
         });
 
         // Ocultar loader cuando la página ha cargado completamente
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             hideGlobalLoader();
+        });
+
+        // ✅ Fix bfcache: pageshow se dispara tanto en carga normal
+        // como al volver atrás con el botón del navegador.
+        // event.persisted === true indica que viene del bfcache.
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                hideGlobalLoader();
+            }
         });
 
         // También ocultar si la página está lista (para navegación desde cache)
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
                 hideGlobalLoader();
             });
         } else {
