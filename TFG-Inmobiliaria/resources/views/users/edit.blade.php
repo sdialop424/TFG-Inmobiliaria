@@ -46,18 +46,7 @@
             </div>
 
             <hr style="border: none; border-top: 1px solid var(--border); margin: 24px 0;">
-
-            <div class="form-group">
-                <label class="form-label" for="password">Nueva Contraseña</label>
-                <input type="password" id="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="Dejar en blanco para no cambiar">
-                @error('password') <div class="form-error"><i class="fas fa-circle-exclamation"></i> {{ $message }}</div> @enderror
-                <div class="form-help">Si no quieres cambiar la contraseña, deja este campo vacío</div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirma tu nueva contraseña">
-            </div>
+            
 
             <div style="display: flex; gap: 12px; margin-top: 32px;">
                 <button type="submit" class="btn btn-primary">
