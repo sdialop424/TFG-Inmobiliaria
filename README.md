@@ -252,11 +252,12 @@ Para prevenir borrados accidentales en cascada de propiedades asociadas a incide
 
 # 📅 11. Planificación y Bitácora de Desarrollo
 
-## 📅 11.1. Planificación Cronológica
-El desarrollo se estructuró a lo largo de las siguientes fases progresivas:
+## 11.1 Planificacion
+
+### 11.1.1 Planificación por fases
 
 | Fase | Tarea | Estado |
-|---|---|---|
+|------|-------|--------|
 | **Fase 1** | Diseño y modelado de datos | ✅ Completado |
 | **Fase 2** | Autenticación y roles de usuario | ✅ Completado |
 | **Fase 3** | CRUD de Propiedades inmobiliarias | ✅ Completado |
@@ -264,8 +265,38 @@ El desarrollo se estructuró a lo largo de las siguientes fases progresivas:
 | **Fase 5** | Dashboard interactivo y permisos | ✅ Completado |
 | **Fase 6** | CRUD de Usuarios y perfiles | ✅ Completado |
 | **Fase 7** | Refinamiento de la interfaz oscura | ✅ Completado |
-| **Fase 8** | Pruebas automatizadas y despliegue AWS/Docker | ✅ Completado |
-| **Fase 9** | Documentación técnica final y video | En progreso |
+| **Fase 8** | Pruebas y despliegue en producción con Docker | ✅ Completado |
+| **Fase 9** | Documentación técnica final y vídeo-manual | ✅ Completado |
+
+---
+
+### 11.1.2 Planificación mensual
+
+| Mes | Descripción | Estado |
+|-----|-------------|--------|
+| **Enero** | Anteproyecto: definición de la aplicación, elección de tecnologías, diseño del esquema E-R, creación del repositorio en GitHub y documentación inicial | ✅ Completado |
+| **Febrero** | Prototipado en Figma (alta fidelidad), diseño UX/UI Dark UI, setup de Docker, scaffolding de Laravel 12, migraciones y seeders | ✅ Completado |
+| **Marzo** | Desarrollo del backend: autenticación con roles, CRUD de propiedades e incidencias, filtros con Eloquent y paginación | ✅ Completado |
+| **Abril** | Capa de Form Requests, capa de Servicios, SoftDeletes, panel de administración de usuarios y exposición de la API REST con Sanctum | ✅ Completado |
+| **Mayo** | Dashboard con estadísticas por rol, mejoras UX/responsive, vídeo-manual, documentación final y despliegue en producción | ✅ Completado |
+
+
+## 11.2 📋 Bitácora
+
+| Semana | Actividades |
+|--------|-------------|
+| **Sem 1–2 (Ene 2026)** | Definición del proyecto, análisis de necesidades, elección de tecnologías, bocetos iniciales y diseño del esquema E-R |
+| **Sem 3–4 (Ene 2026)** | Prototipado de alta fidelidad en Figma. Setup del repositorio y configuración del entorno Docker (PHP 8.2 + Apache + MySQL + phpMyAdmin) |
+| **Sem 5–6 (Feb 2026)** | Scaffolding Laravel 12. Migraciones de todas las tablas (`users`, `rols`, `propiedades`, `incidencias`, `tipos_propiedad`, `tipos_incidencia`, `estados_incidencia`). Seeders con datos iniciales |
+| **Sem 7–8 (Feb 2026)** | Módulo de autenticación completo: registro, login, logout. Sistema de roles con `RolMiddleware`. Enums PHP para roles y estados |
+| **Sem 9–10 (Mar 2026)** | CRUD completo de propiedades: listado paginado, crear, editar, ver detalle y eliminar. Control de acceso por rol en cada acción |
+| **Sem 11–12 (Mar 2026)** | CRUD completo de incidencias con tipos y estados. Filtros combinados por tipo, estado y fecha usando `when()` de Eloquent. Paginación con `withQueryString()` |
+| **Sem 13–14 (Abr 2026)** | Capa de Form Requests para validación centralizada (`PropiedadRequest`, `StoreIncidenciaRequest`, `UpdateIncidenciaRequest`, `StoreUserRequest`, `ChangePasswordRequest`) |
+| **Sem 15 (Abr 2026)** | Capa de Servicios (`IncidenciaService`, `PropiedadServices`). SoftDeletes en propiedades e incidencias. Manejo global de errores de base de datos con vista 503 personalizada |
+| **Sem 16 (May 2026)** | Panel de administración: CRUD de usuarios, asignación de roles, cambio de contraseña con verificación. Protección contra auto-eliminación de cuenta |
+| **Sem 17 (May 2026)** | Dashboard con estadísticas diferenciadas por rol. Últimas incidencias con buscador. API REST con Sanctum: endpoints de autenticación, propiedades, incidencias, usuarios y dashboard |
+| **Sem 18 (May 2026)** | Mejoras UX: diseño Dark UI con paleta de colores, tipografía Sora + JetBrains Mono, responsive con sidebar drawer en móvil, tabla acordeón en incidencias, confirmaciones con SweetAlert2 |
+| **Sem 19 (May 2026)** | Vídeo-manual, documentación final y despliegue en producción |
 
 # 🚀 12. Mejoras y Propuestas Futuras (Versión 2.0)
 
